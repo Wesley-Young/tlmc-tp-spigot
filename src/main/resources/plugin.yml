@@ -1,0 +1,39 @@
+name: tlmc-tp-spigot
+main: cn.timelessmc.teleport.PluginMain
+version: 1.0-SNAPSHOT
+api-version: 1.21
+
+depend:
+  - floodgate
+
+commands:
+  warp:
+    usage: "§cUsage: /warp <warpName>"
+    description: "Warp to a fixed labeled place - warp entry."
+  setwarp:
+    usage: "§cUsage: /setwarp <type> <name> <description>"
+    description: "Create a warp entry for your current location - for operators only."
+  delwarp:
+    usage: "§cUsage: /delwarp <name>"
+    description: "Delete a warp entry - for operators only."
+  home:
+    usage: "§cUsage: /home <name>"
+    description: "Warp to a personally fixed, labeled home - home entry."
+  sethome:
+    usage: "§cUsage: /sethome <name>"
+    description: "Create a personal home entry for your current location."
+  delhome:
+    usage: "§cUsage: /delhome <name>"
+    description: "Delete a personal home entry."
+  tpa:
+    usage: "§cUsage: /tpa <playerName>"
+    description: "Send a teleport request to <playername>."
+  tpaccept:
+    usage: "§cUsage: /tpaccept"
+    description: "Accept the TPA request."
+  tpdeny:
+    usage: "§cUsage: /tpdeny"
+    description: "Deny the TPA request."
+  snowball:
+    usage: "§cUsage: /snowball"
+    description: "Get a 'Mystery Snowball'. Don't call if you already have one!"
