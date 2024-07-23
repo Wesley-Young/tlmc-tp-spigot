@@ -57,7 +57,7 @@ public class PlayerProcessor implements Listener {
             Properties homes = new Properties();
             homes.load(Files.newInputStream(homesDir));
             this.rootMap.put(playerUUID.toString(), new HomeEntrySubMap(homes));
-        } catch (Exception var6) {
+        } catch (Exception e) {
             Bukkit.getLogger().log(Level.SEVERE, "An ERROR occurred when loading one player's home list.");
             Bukkit.getLogger().log(Level.SEVERE, "As a result, this player CANNOT call functions about homes.");
         }
@@ -74,7 +74,7 @@ public class PlayerProcessor implements Listener {
             HomeEntrySubMap subMap = this.rootMap.get(playerUUID);
             subMap.toProperties().store(Files.newOutputStream(homesDir), event.getPlayer().getName() + "'s home list. Don't modify!");
             this.rootMap.remove(event.getPlayer().getUniqueId().toString());
-        } catch (IOException var6) {
+        } catch (IOException ioe) {
             Bukkit.getLogger().log(Level.SEVERE, "An ERROR occurred when saving " + event.getPlayer().getName() + "'s home list.");
             Bukkit.getLogger().log(Level.SEVERE, "This player's data still remains in the RAM.");
         }
@@ -93,23 +93,22 @@ public class PlayerProcessor implements Listener {
 
     @EventHandler
     public void mysterySnowballUsed(@NotNull ProjectileLaunchEvent event) {
-        Projectile var4 = event.getEntity();
-        if (var4 instanceof Snowball snowball) {
-            ProjectileSource var5 = snowball.getShooter();
-            if (var5 instanceof Player player) {
+        Projectile projectile = event.getEntity();
+        if (projectile instanceof Snowball snowball) {
+            ProjectileSource source = snowball.getShooter();
+            if (source instanceof Player player) {
                 if (this.floodgateApi.isFloodgatePlayer(player.getUniqueId())) {
                     FloodgatePlayer floodgatePlayer = this.floodgateApi.getPlayer(player.getUniqueId());
                     if (SnowballCommandHandler.SNOWBALL_META.equals(snowball.getItem().getItemMeta())) {
                         event.setCancelled(true);
-                        if (player.isOp()) {
-                            floodgatePlayer.sendForm(BedrockGUIFactory.getInstance().createRootFormForOP(floodgatePlayer));
-                        } else {
-                            floodgatePlayer.sendForm(BedrockGUIFactory.getInstance().createRootForm(floodgatePlayer));
-                        }
+                        floodgatePlayer.sendForm(
+                                player.isOp() ?
+                                        BedrockGUIFactory.getInstance().createRootFormForOP(floodgatePlayer) :
+                                        BedrockGUIFactory.getInstance().createRootForm(floodgatePlayer)
+                        );
                     }
                 }
             }
         }
-
     }
 }
