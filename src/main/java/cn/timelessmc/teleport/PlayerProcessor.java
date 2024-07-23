@@ -4,6 +4,7 @@ import cn.timelessmc.teleport.gui.BedrockGUIFactory;
 import cn.timelessmc.teleport.gui.SnowballCommandHandler;
 import cn.timelessmc.teleport.home.HomeEntrySubMap;
 import org.bukkit.Bukkit;
+import org.bukkit.GameRule;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Snowball;
@@ -23,6 +24,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -81,10 +83,12 @@ public class PlayerProcessor implements Listener {
 
     @EventHandler
     public void playerRespawned(@NotNull PlayerRespawnEvent event) {
-        if (this.floodgateApi.isFloodgatePlayer(event.getPlayer().getUniqueId())) {
-            event.getPlayer().getInventory().addItem(SnowballCommandHandler.SNOWBALL);
+        if (Boolean.FALSE.equals(Objects.requireNonNull(event.getPlayer().getLocation().getWorld())
+                .getGameRuleValue(GameRule.KEEP_INVENTORY))) {
+            if (this.floodgateApi.isFloodgatePlayer(event.getPlayer().getUniqueId())) {
+                event.getPlayer().getInventory().addItem(SnowballCommandHandler.SNOWBALL);
+            }
         }
-
     }
 
     @EventHandler
