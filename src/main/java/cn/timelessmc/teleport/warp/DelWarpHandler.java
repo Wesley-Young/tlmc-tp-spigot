@@ -18,7 +18,7 @@ public class DelWarpHandler implements TabExecutor {
 
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         if (sender instanceof Player executor) {
-            if (args.length != 1 | !executor.isOp()) {
+            if (args.length != 1 || !executor.isOp()) {
                 return false;
             } else {
                 if (!this.warpEntryMap.containsKey(args[0])) {
