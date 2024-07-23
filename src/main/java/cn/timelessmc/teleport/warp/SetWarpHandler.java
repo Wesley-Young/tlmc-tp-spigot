@@ -22,9 +22,7 @@ public class SetWarpHandler implements TabExecutor {
 
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         if (sender instanceof Player executor) {
-            if (!sender.isOp()) {
-                return false;
-            } else if (args.length != 3) {
+            if (!sender.isOp() || args.length != 3) {
                 return false;
             } else if (!this.types.contains(args[0])) {
                 executor.sendRawMessage("§cBad type!");
