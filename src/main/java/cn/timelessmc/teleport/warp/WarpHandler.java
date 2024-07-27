@@ -57,8 +57,15 @@ public class WarpHandler implements TabExecutor {
     public HashMap<String, String> getPinYinWarpList(Set<String> warpList) {
         HashMap<String, String> pinYinWarpList = new HashMap<>();
         for(String warpName:warpList) {
-            String pinyinWarpName= Pinyin.toPinyin(warpName, "");
-            pinYinWarpList.put(pinyinWarpName.toLowerCase(), warpName);
+            String[] pinyinWarpNames = Pinyin.toPinyin(warpName, ",").split(",");
+            StringBuilder quanPin= new StringBuilder();
+            StringBuilder jianPin= new StringBuilder();
+            for (String pinyinWarpName : pinyinWarpNames) {
+                quanPin.append(pinyinWarpName.toLowerCase());
+                jianPin.append(pinyinWarpName.toLowerCase().charAt(0));
+            }
+            pinYinWarpList.put(quanPin.toString(), warpName);
+            pinYinWarpList.put(jianPin.toString(), warpName);
         }
         return pinYinWarpList;
     }
