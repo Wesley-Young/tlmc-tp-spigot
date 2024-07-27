@@ -1,5 +1,6 @@
 plugins {
     id("java")
+    id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
 group = "cn.timelessmc"
@@ -18,12 +19,22 @@ repositories {
     maven {
         url = uri("https://repo.opencollab.dev/main/")
     }
+    maven {
+        url = uri("https://maven.aliyun.com/repository/public/")
+    }
+    maven{
+        url =uri("https://plugins.gradle.org/m2/")
+    }
 }
 
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.21-R0.1-SNAPSHOT")
     compileOnly("org.geysermc.floodgate:api:2.2.2-SNAPSHOT")
     implementation("org.jetbrains:annotations:24.0.0")
+    implementation( "io.github.biezhi:TinyPinyin:2.0.3.RELEASE")
+    implementation("com.github.johnrengelman.shadow:com.github.johnrengelman.shadow.gradle.plugin:7.1.2")
+
+
 }
 
 val targetJavaVersion = 21
@@ -39,4 +50,8 @@ java {
 tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
     // options.compilerArgs.addAll(listOf("-Xlint:all", "-Xlint:-processing"))
+}
+
+tasks.shadowJar {
+    archiveFileName.set("tlmc-tp-spigot-shadow.jar")
 }
